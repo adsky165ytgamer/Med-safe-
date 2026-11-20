@@ -1,0 +1,377 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Stores elder accessibility preferences and root ownership anchor for a signed-in user without storing PII.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the user",
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "selectedLanguage": {
+          "type": "string",
+          "description": "Preferred elder language for medicine explanations and voice readout",
+          "maxLength": 50,
+          "minLength": 2
+        },
+        "textSize": {
+          "type": "string",
+          "description": "Accessibility text size setting",
+          "enum": ["normal", "large", "jumbo"],
+          "maxLength": 20
+        },
+        "highContrast": {
+          "type": "boolean",
+          "description": "Whether high-contrast elder mode is enabled"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when user profile was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when preferences were last updated"
+        }
+      },
+      "required": ["userId", "selectedLanguage", "textSize", "highContrast", "createdAt", "updatedAt"]
+    },
+    "CabinetMedicine": {
+      "title": "CabinetMedicine",
+      "description": "A saved medicine entry in the user's digital medicine cabinet.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID",
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "brandName": {
+          "type": "string",
+          "description": "Medicine brand name",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "genericName": {
+          "type": "string",
+          "description": "Active chemical generic name and strength",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Simple explanation of what the medicine treats",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "dosage": {
+          "type": "string",
+          "description": "Recommended dosage instructions",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "timing": {
+          "type": "string",
+          "description": "Meal and time instructions",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "warning": {
+          "type": "string",
+          "description": "Safety warnings and contraindications",
+          "maxLength": 1500,
+          "minLength": 1
+        },
+        "foodInstructions": {
+          "type": "string",
+          "description": "Food and beverage instructions",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "missedDose": {
+          "type": "string",
+          "description": "Missed dose guidance",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "storage": {
+          "type": "string",
+          "description": "Storage conditions",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "audioSpeechText": {
+          "type": "string",
+          "description": "Short elder-friendly voice summary",
+          "maxLength": 1500,
+          "minLength": 1
+        },
+        "keyBulletPoints": {
+          "type": "array",
+          "description": "Bounded list of up to 10 key takeaway strings"
+        },
+        "schedule": {
+          "type": "array",
+          "description": "Bounded list of up to 10 recommended schedule slot objects"
+        },
+        "languageUsed": {
+          "type": "string",
+          "description": "Language used for this medicine card",
+          "maxLength": 50,
+          "minLength": 2
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when saved to cabinet"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when last updated"
+        }
+      },
+      "required": [
+        "userId",
+        "brandName",
+        "genericName",
+        "purpose",
+        "dosage",
+        "timing",
+        "warning",
+        "foodInstructions",
+        "missedDose",
+        "storage",
+        "audioSpeechText",
+        "keyBulletPoints",
+        "schedule",
+        "languageUsed",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PillTask": {
+      "title": "PillTask",
+      "description": "A scheduled daily dose item in the elder's pill tracker.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID",
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineId": {
+          "type": "string",
+          "description": "Associated medicine identifier",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "medicineName": {
+          "type": "string",
+          "description": "Display name of medicine",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "timeSlot": {
+          "type": "string",
+          "description": "Time slot category (morning, afternoon, evening, night)",
+          "maxLength": 40,
+          "minLength": 1
+        },
+        "time": {
+          "type": "string",
+          "description": "Display time e.g. 08:30 AM",
+          "maxLength": 40,
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "description": "Translated label for the slot",
+          "maxLength": 100,
+          "minLength": 1
+        },
+        "instruction": {
+          "type": "string",
+          "description": "Dosage instruction for this slot",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "taken": {
+          "type": "boolean",
+          "description": "Whether the dose has been marked taken"
+        },
+        "takenAt": {
+          "type": "string",
+          "description": "Time string when dose was marked taken",
+          "maxLength": 40
+        },
+        "dateKey": {
+          "type": "string",
+          "description": "ISO date key YYYY-MM-DD",
+          "maxLength": 20,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when task was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when task was last updated"
+        }
+      },
+      "required": [
+        "userId",
+        "medicineId",
+        "medicineName",
+        "timeSlot",
+        "time",
+        "label",
+        "instruction",
+        "taken",
+        "dateKey",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ScanHistoryItem": {
+      "title": "ScanHistoryItem",
+      "description": "Historical log of an analyzed medicine label or query.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner Firebase Auth UID",
+          "maxLength": 128,
+          "minLength": 1,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "brandName": {
+          "type": "string",
+          "description": "Medicine brand name",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "genericName": {
+          "type": "string",
+          "description": "Active generic ingredient",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Purpose summary",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "dosage": {
+          "type": "string",
+          "description": "Dosage instructions",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "timing": {
+          "type": "string",
+          "description": "Timing instructions",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "warning": {
+          "type": "string",
+          "description": "Safety warning",
+          "maxLength": 1500,
+          "minLength": 1
+        },
+        "foodInstructions": {
+          "type": "string",
+          "description": "Food instructions",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "missedDose": {
+          "type": "string",
+          "description": "Missed dose guidance",
+          "maxLength": 1000,
+          "minLength": 1
+        },
+        "storage": {
+          "type": "string",
+          "description": "Storage guidance",
+          "maxLength": 500,
+          "minLength": 1
+        },
+        "audioSpeechText": {
+          "type": "string",
+          "description": "Audio narration summary",
+          "maxLength": 1500,
+          "minLength": 1
+        },
+        "keyBulletPoints": {
+          "type": "array",
+          "description": "Bounded list of up to 10 key takeaways"
+        },
+        "schedule": {
+          "type": "array",
+          "description": "Bounded list of up to 10 schedule items"
+        },
+        "languageUsed": {
+          "type": "string",
+          "description": "Language used",
+          "maxLength": 50,
+          "minLength": 2
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when analyzed"
+        }
+      },
+      "required": [
+        "userId",
+        "brandName",
+        "genericName",
+        "purpose",
+        "dosage",
+        "timing",
+        "warning",
+        "foodInstructions",
+        "missedDose",
+        "storage",
+        "audioSpeechText",
+        "keyBulletPoints",
+        "schedule",
+        "languageUsed",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Root user profile storing non-PII accessibility preferences and serving as parent ownership anchor."
+    },
+    "/users/{userId}/cabinet/{medicineId}": {
+      "schema": { "$ref": "#/entities/CabinetMedicine" },
+      "description": "Medicines saved in the user's persistent digital medicine cabinet."
+    },
+    "/users/{userId}/pillTasks/{taskId}": {
+      "schema": { "$ref": "#/entities/PillTask" },
+      "description": "Daily scheduled pill intake tasks tracked by the elder or caregiver."
+    },
+    "/users/{userId}/scanHistory/{scanId}": {
+      "schema": { "$ref": "#/entities/ScanHistoryItem" },
+      "description": "History log of analyzed medicine explanations."
+    }
+  }
+}

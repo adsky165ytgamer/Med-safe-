@@ -1,0 +1,6 @@
+{
+  "name": "MedSafe AI - Multi-Language Medicine Explainer & Pill Tracker",
+  "description": "Scan or upload medicine labels, prescription bottles, or strips to get crystal-clear elder-friendly explanations, dosage instructions, safety alerts, and audio readings in Hindi, Telugu, Tamil, Bengali, Marathi, Spanish, English, and more.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
